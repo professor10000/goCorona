@@ -1,0 +1,144 @@
+----------------------------------------------------
+BFS
+----------------------------------------------------
+graph = {
+  2: [3,4],
+  3: [7,8],
+  4: [6,8],
+  7: [],
+  8: [],
+  6: []
+
+}
+
+visited = []
+queue = []
+
+def bfs(visited, graph, node):
+  visited.append(node)
+  queue.append(node)
+
+  while queue:
+    m = queue.pop(0)
+    print(m, end = " ")
+
+    for neighbour in graph[m]:
+      if neighbour not in visited:
+        visited.append(neighbour)
+        queue.append(neighbour)
+
+bfs(visited,graph,2)
+----------------------------------------------------
+
+----------------------------------------------------
+DFS
+----------------------------------------------------
+graph = {
+  2: [3,4],
+  3: [7,8],
+  4: [6,8],
+  7: [],
+  8: [],
+  6: []
+}
+
+visited = set()
+
+def dfs(visited, graph, node):
+  if node not in visited:
+    print(node, end = " ")
+    visited.add(node)
+
+    for neighbour in graph[node]:
+      dfs(visited, graph, neighbour)
+
+dfs(visited, graph, 2)
+----------------------------------------------------
+
+----------------------------------------------------
+SVM
+----------------------------------------------------
+import pandas as pd
+import numpy as np
+from sklearn import svm, datasets
+import matplotlib.pyplot as plt
+
+data = datasets.load_iris()
+X = data.data[:, :2]
+Y = data.target
+
+x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+h = (x_max / x_min)/100
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+X_plot = np.c_[xx.ravel(), yy.ravel()]
+
+C=1.0
+
+svc_classifier = svm.SVC(kernel='linear', C=C).fit(X, Y)
+Z = svc_classifier.predict(X_plot)
+Z = Z.reshape(xx.shape)
+
+plt.figure(figsize=(15, 5))
+plt.subplot(121)
+plt.contourf(xx, yy, Z, cmap=plt.cm.tab10, alpha=0.3)
+plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Set1)
+plt.xlabel('Sepal length')
+plt.ylabel('Sepal width')
+plt.xlim(xx.min(), xx.max())
+plt.title('Support Vector Classifier With Kernel')
+plt.show()
+----------------------------------------------------
+
+----------------------------------------------------
+Pandas
+----------------------------------------------------
+import pandas as pd 
+df = pd.read_csv('data.csv') 
+
+print(df.to_string())
+print("Mean =",df['Salary'].mean())
+print("Sum =",df['Salary'].sum())
+print("max =",df['Salary'].max())
+print("min =",df['Salary'].min())
+print("count =",df['Salary'].count())
+print("Median =",df['Salary'].median())
+print("Standard Derivation =",df['Salary'].std())
+print("Var =",df['Salary'].var())
+
+
+print("Sum of salary of Age 19 = ",df.groupby(['Age']).sum())
+----------------------------------------------------------------------
+
+----------------------------------------------------
+KNN
+----------------------------------------------------
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+
+x = np.random.randint(8, 29, size=20)
+y = np.random.randint(5, 20, size=20)
+classes = np.random.randint(0, 2, size=20)
+
+data = np.array(list(zip(x, y)))
+
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(data, classes)
+
+new_x = 27
+new_y = 15
+new_point = [(new_x, new_y)]
+prediction = knn.predict(new_point)
+
+plt.scatter(x, y, c=classes + [prediction[0]])
+plt.scatter(new_x, new_y, marker='^')
+plt.text(x=new_x-1.7, y=new_y-0.7, s=f"new point, class: {prediction[0]}")
+
+
+plt.xlim(8, 29)
+plt.ylim(5, 20)
+plt.gca().set_aspect('equal', adjustable='box')
+
+plt.show()
+---------------------------------------------------------------------------------
