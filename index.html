@@ -144,7 +144,480 @@
       </a>
     </div>
   </div>
+<pre>
+1. DDL Commands
 
+1.1 Create Tables
+
+SQL
+CREATE TABLE employee (
+  emp_id INT PRIMARY KEY,
+  emp_name VARCHAR(50) NOT NULL,
+  city VARCHAR(50),
+  dept VARCHAR(50),
+  salary DECIMAL(10,2)
+);
+
+CREATE TABLE customer (
+  Cust_ID INT PRIMARY KEY,
+  Cust_name VARCHAR(50) NOT NULL,
+  Cust_phno VARCHAR(15),
+  Cust_Add VARCHAR(100),
+  city VARCHAR(50),
+  country VARCHAR(50)
+);
+Use code with caution.
+content_copy
+2. DML Commands
+
+2.1 Insert Data
+
+2.1.1 Insert with Values Clause
+
+SQL
+INSERT INTO employee (emp_id, emp_name, city, dept, salary)
+VALUES (101, 'John Doe', 'Vadodara', 'Marketing', 15000.00);
+
+-- Other insert methods (commented out for brevity)
+-- INSERT INTO employee ... SELECT ...
+-- INSERT INTO employee SET ...
+Use code with caution.
+content_copy
+2.1.2 Insert Multiple Rows
+
+SQL
+INSERT INTO employee (emp_id, emp_name, city, dept, salary)
+VALUES
+  (102, 'Jane Smith', 'Ahmedabad', 'Finance', 18000.00),
+  (103, 'Michael Lee', 'Surat', 'Sales', 20000.00),
+  (104, 'Alice Young', 'Vadodara', 'Marketing', 16500.00),
+  (105, 'David Kim', 'Rajkot', 'Finance', 19000.00);
+Use code with caution.
+content_copy
+2.2 Update Data
+
+SQL
+UPDATE employee
+SET salary = 20000.00
+WHERE dept = 'Marketing';
+Use code with caution.
+content_copy
+2.3 Delete Data
+
+SQL
+DELETE FROM employee
+WHERE dept = 'Finance';
+Use code with caution.
+content_copy
+3. Select Data
+
+3.1 Employees in Vadodara
+
+SQL
+SELECT * FROM employee
+WHERE city = 'Vadodara';
+Use code with caution.
+content_copy
+3.2 Employees in Marketing
+
+SQL
+SELECT * FROM employee
+WHERE dept = 'Marketing';
+Use code with caution.
+content_copy
+4. Group Functions
+
+4.1 Count Employees in Vadodara
+
+SQL
+SELECT COUNT(*) AS total_employees
+FROM employee
+WHERE city = 'Vadodara';
+Use code with caution.
+content_copy
+4.2 Minimum Salary
+
+SQL
+SELECT MIN(salary) AS min_salary
+FROM employee;
+Use code with caution.
+content_copy
+4.3 Maximum Salary
+
+SQL
+SELECT MAX(salary) AS max_salary
+FROM employee;
+Use code with caution.
+content_copy
+4.4 Sum of Salaries in Marketing
+
+SQL
+SELECT SUM(salary) AS total_marketing_salary
+FROM employee
+WHERE dept = 'Marketing';
+Use code with caution.
+content_copy
+4.5 Average Salary
+
+SQL
+SELECT AVG(salary) AS average_salary
+FROM employee;
+Use code with caution.
+content_copy
+5. Select with AND, OR, BETWEEN, >=, <=, and IN Operators
+
+5.1 Customers from India and Gujarat
+
+SQL
+SELECT * FROM customer
+WHERE country = 'India' AND city = 'Gujarat';
+Use code with caution.
+content_copy
+5.2 Customers from Surat or Vadodara
+
+SQL
+SELECT * FROM customer
+WHERE city = 'Surat' OR city = 'Vadodara';
+Use code with caution.
+content_copy
+5.3 Employees in Vadodara Marketing
+
+SQL
+SELECT * FROM employee
+WHERE city = 'Vadodara' AND dept = 'Marketing';
+Use code with caution.
+content_copy
+5.4 Students with First Class
+
+SQL
+SELECT * FROM student_detail
+WHERE percentage BETWEEN 60 AND 69;
+Use code with caution.
+content_copy
+5.5 Students Aged 10 to 15
+
+SQL
+SELECT * FROM student_detail
+WHERE age >= 10 AND age <= 15;
+Use code with caution.
+content_copy
+5.6 Employees with Salary > 5000
+
+SQL
+SELECT * FROM employee
+WHERE salary > 5000;
+Use code with caution.
+content_copy
+6. IN Operator Examples
+
+6.1 Customers in Mumbai, Ahmedabad, Vadodara
+
+SQL
+SELECT * FROM customer
+WHERE city IN ('Mumbai', 'Ahmedabad', 'Vadodara');
+Use code with caution.
+content_copy
+6.2 Customers Not in Mumbai, Ahmedabad, Vadodara
+
+SQL
+SELECT * FROM customer
+WHERE city NOT IN ('Mumbai', 'Ahmedabad',
+Use code with caution.
+content_copy
+
+
+
+share
+
+
+more_vert
+
+next
+volume_up
+
+Here's the next part of the laboratory manual covering additional SQL concepts:
+
+7. Table Constraints
+
+7.1 Customer Table with Constraints
+
+SQL
+CREATE TABLE customer (
+  CustomerID INT PRIMARY KEY,
+  CustomerName VARCHAR(50) NOT NULL,
+  Country VARCHAR(50),
+  Address VARCHAR(100),
+  City VARCHAR(50),
+  CHECK (CustomerID LIKE 'C%') -- Ensures CustomerID starts with 'C'
+);
+Use code with caution.
+content_copy
+8. String Manipulation Functions
+
+8.1 Students with City Starting with "S"
+
+SQL
+SELECT * FROM student_master
+WHERE city LIKE 'S%';
+Use code with caution.
+content_copy
+8.2 Students Younger Than 23
+
+SQL
+SELECT * FROM student_master
+WHERE age < 23;
+Use code with caution.
+content_copy
+8.3 Students with Names Ending in "a"
+
+SQL
+SELECT * FROM student_master
+WHERE stud_name LIKE '%a';
+Use code with caution.
+content_copy
+8.4 Students with Second Character "a"
+
+SQL
+SELECT * FROM student_master
+WHERE SUBSTRING(stud_name, 2, 1) = 'a';
+Use code with caution.
+content_copy
+9. Order By
+
+9.1 Customers Ordered by City (Descending)
+
+SQL
+SELECT * FROM customer
+ORDER BY city DESC;
+Use code with caution.
+content_copy
+10. OR Operator
+
+10.1 Customers from Mumbai or Ahmedabad
+
+SQL
+SELECT * FROM customer
+WHERE city = 'Mumbai' OR city = 'Ahmedabad';
+Use code with caution.
+content_copy
+11. Sales Table and Query
+
+11.1 Create Sales Table and Find Customers with High Balance
+
+SQL
+CREATE TABLE Sales (
+  O_id INT PRIMARY KEY,
+  Order_name VARCHAR(50),
+  Previous_balance DECIMAL(10,2),
+  CustomerID INT FOREIGN KEY REFERENCES customer(CustomerID)
+);
+
+SELECT * FROM customer
+WHERE CustomerID IN (SELECT CustomerID FROM Sales WHERE Previous_balance > 5000);
+Use code with caution.
+content_copy
+12. Table Relationships
+
+12.1 Person and Orders Tables
+
+SQL
+CREATE TABLE Person (
+  P_ID INT PRIMARY KEY,
+  LastName VARCHAR(50),
+  FirstName VARCHAR(50),
+  Address VARCHAR(100),
+  City VARCHAR(50)
+);
+
+CREATE TABLE Orders (
+  Order_ID INT PRIMARY KEY,
+  Order_No VARCHAR(50),
+  P_ID INT FOREIGN KEY REFERENCES Person(P_ID)
+);
+Use code with caution.
+content_copy
+13. Join Operations
+
+13.1 Inner Join
+
+SQL
+SELECT *
+FROM Customer
+INNER JOIN Orders ON Customer.Cust_ID = Orders.Cust_ID;
+Use code with caution.
+content_copy
+13.2 Left Join
+
+SQL
+SELECT *
+FROM Customer
+LEFT JOIN Orders ON Customer.Cust_ID = Orders.Cust_ID;
+Use code with caution.
+content_copy
+14. Sequences
+
+14.1 Employee Table with Sequence
+
+SQL
+CREATE SEQUENCE emp_id_seq;
+
+CREATE TABLE employee (
+  empid INT PRIMARY KEY DEFAULT nextval('emp_id_seq'),
+  empname VARCHAR(50),
+  salary DECIMAL(10,2),
+  designation VARCHAR(50)
+);
+
+INSERT INTO employee (empname, salary, designation)
+VALUES ('John Doe', 15000.00, 'Marketing');
+Use code with caution.
+content_copy
+15. Set Operations
+
+15.1 Union
+
+SQL
+CREATE TABLE First (ID INT, Name VARCHAR(50));
+INSERT INTO First VALUES (1, 'Alice'), (2, 'Bob');
+
+CREATE TABLE Second (ID INT, Name VARCHAR(50));
+INSERT INTO Second VALUES (2, 'Bob'), (3, 'Charlie');
+
+SELECT * FROM First UNION SELECT * FROM Second;
+Use code with caution.
+content_copy
+15.2 Intersect
+
+SQL
+SELECT * FROM First INTERSECT SELECT * FROM Second;
+Use code with caution.
+content_copy
+15.3 Minus
+
+SQL
+SELECT * FROM First EXCEPT SELECT * FROM Second;
+Use code with caution.
+content_copy
+16. Primary Key and Insert
+
+16.1 Students Table
+
+SQL
+CREATE TABLE students (
+  stud_id INT PRIMARY KEY,
+  stud_name VARCHAR(50),
+  dept VARCHAR(50),
+  semester INT,
+  city VARCHAR(50)
+);
+
+INSERT INTO students (stud_id, stud_name, dept, semester, city)
+VALUES (1, 'Alice', 'IMCA', 5, 'Vadodara'),
+       (2, 'Bob', 'CS', 3
+Use code with caution.
+content_copy
+circle
+Ahmedabad, Gujarat, India
+
+
+
+share
+
+
+more_vert
+
+next
+volume_up
+
+Absolutely! Here's the final part of the laboratory manual:
+
+17. Alter and Drop Commands
+
+17.1 Adding a Column
+
+SQL
+ALTER TABLE employee ADD new_column VARCHAR(50);
+Use code with caution.
+content_copy
+17.2 Changing Column Data Type
+
+SQL
+ALTER TABLE employee ALTER COLUMN salary TYPE INT;
+Use code with caution.
+content_copy
+17.3 Dropping a Column
+
+SQL
+ALTER TABLE employee DROP COLUMN new_column;
+Use code with caution.
+content_copy
+18. Additional DML Commands
+
+18.1 Delete with WHERE Clause
+
+SQL
+DELETE FROM students WHERE stud_id = 3;
+Use code with caution.
+content_copy
+18.2 Update with SET Clause
+
+SQL
+UPDATE students
+SET dept = 'IT'
+WHERE stud_name = 'Alice';
+Use code with caution.
+content_copy
+19. Subqueries
+
+19.1 Find Highest Salary
+
+SQL
+SELECT * FROM employee
+WHERE salary = (SELECT MAX(salary) FROM employee);
+Use code with caution.
+content_copy
+20. View Creation
+
+20.1 View for Active Employees
+
+SQL
+CREATE VIEW active_employees AS
+  SELECT * FROM employee
+  WHERE dept <> 'Finance';
+Use code with caution.
+content_copy
+21. Stored Procedures
+
+21.1 Procedure to Insert Employee
+
+SQL
+CREATE PROCEDURE insert_employee (
+  IN emp_name VARCHAR(50),
+  IN salary DECIMAL(10,2),
+  IN dept VARCHAR(50)
+)
+BEGIN
+  INSERT INTO employee (emp_name, salary, dept)
+  VALUES (emp_name, salary, dept);
+END;
+Use code with caution.
+content_copy
+22. Functions
+
+22.1 Function to Calculate Bonus
+
+SQL
+CREATE FUNCTION calculate_bonus(salary DECIMAL(10,2))
+RETURNS DECIMAL(10,2)
+BEGIN
+  DECLARE bonus DECIMAL(10,2);
+  SET bonus = salary * 0.1; -- Replace 0.1 with your bonus percentage
+  RETURN bonus;
+END;
+
+SELECT emp_name, salary, calculate_bonus(salary) AS bonus
+FROM employee;
+</pre>
   <script>
     // Function to get the file size asynchronously
     function getFileSize(url, callback) {
