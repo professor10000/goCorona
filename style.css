@@ -1,0 +1,149 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box
+}
+
+
+.main{
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main .lists{
+  width: 40%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main .lists ul{
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  font-size: larger;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.main .lists ul li{
+  background: black;
+  width: 200px;
+  height: auto;
+  padding: 10px;
+  color: white;
+  border-radius: .4rem;
+  cursor: pointer;
+}
+
+.main .codeArea{
+  width: 60%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid;
+}
+
+.main .codeArea .codeBox{
+  width: 90%;
+  height: 80%;
+  min-height: 50%;
+  margin-top: 0rem;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  border-radius: .5rem;
+  padding: 10px;
+  position: relative;
+  overflow: scroll;
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+
+.main .codeArea .codeBox .bar{
+  width:100%;
+  height: 4rem;
+  background: #292929;
+  border-radius: .5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.main .codeArea .codeBox .bar .circles{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70px;
+}
+
+.main .codeArea .codeBox .bar .circles > div{
+  width: 20px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+
+.red{
+  background: #ff0400;
+}
+
+.green{
+  background: #18ee18;
+}
+
+.yellow{
+  background: #eee018;
+}
+
+.main .codeArea .codeBox .bar .copyBtn{
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+.main .codeArea .codeBox .code{
+  overflow: scroll;
+  padding: 40px;
+  margin-top: 2rem;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .main{
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+    margin-top: 50px !important;
+  }
+
+  .lists{
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .main .codeArea{
+    width: 100%;
+    height: 1000px !important;
+  }
+}
