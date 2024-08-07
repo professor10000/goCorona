@@ -659,6 +659,122 @@ int main() {
 
     return 0;
 }
+`, 
+        simpleLinkedList: `#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;  // Initialize the head of the list
+
+void insertion(int x, int fromEnd);
+void deletion(int x);
+void show();
+
+int main() {
+    int choice, value, fromEnd;
+
+    do {
+        printf("Operations to be performed:\\n");
+        printf("1. Insert at beginning\\n2. Insert at end\\n3. Delete\\n4. Show\\n5. Exit\\n");
+        printf("Enter your Choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to insert at beginning: ");
+                scanf("%d", &value);
+                insertion(value, 0);
+                break;
+            case 2:
+                printf("Enter value to insert at end: ");
+                scanf("%d", &value);
+                insertion(value, 1);
+                break;
+            case 3:
+                printf("Enter value to delete: ");
+                scanf("%d", &value);
+                deletion(value);
+                break;
+            case 4:
+                show();
+                break;
+            case 5:
+                exit(0);
+            default:
+                printf("Invalid Request!! Try Again Please\\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+void insertion(int x, int fromEnd) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = x;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+    } else if (fromEnd) {
+        struct Node* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    } else {
+        newNode->next = head;
+        head = newNode;
+    }
+}
+
+void deletion(int x) {
+    if (head == NULL) {
+        printf("List is empty! Cannot delete.\\n");
+        return;
+    }
+
+    struct Node* temp = head;
+    struct Node* prev = NULL;
+
+    if (head->data == x) {
+        head = head->next;
+        free(temp);
+        printf("Node with value %d deleted.\\n", x);
+        return;
+    }
+
+    while (temp != NULL && temp->data != x) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        printf("Node with value %d not found.\\n", x);
+    } else {
+        prev->next = temp->next;
+        free(temp);
+        printf("Node with value %d deleted.\\n", x);
+    }
+}
+
+void show() {
+    if (head == NULL) {
+        printf("List is empty!\\n");
+        return;
+    }
+
+    struct Node* temp = head;
+    printf("List elements: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\\n");
+}
 `,
   };
 
