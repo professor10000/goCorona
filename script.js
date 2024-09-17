@@ -660,120 +660,207 @@ int main() {
     return 0;
 }
 `, 
-        simpleLinkedList: `#include <stdio.h>
+        simpleLinkedList: `
+        #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
-    int data;
-    struct Node* next;
+struct node
+{
+  int data;
+  struct node *next;
 };
 
-struct Node* head = NULL;  // Initialize the head of the list
+struct node *head = NULL;
+struct node *current = NULL;
 
-void insertion(int x, int fromEnd);
-void deletion(int x);
-void show();
-
-int main() {
-    int choice, value, fromEnd;
-
-    do {
-        printf("Operations to be performed:\\n");
-        printf("1. Insert at beginning\\n2. Insert at end\\n3. Delete\\n4. Show\\n5. Exit\\n");
-        printf("Enter your Choice: ");
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                printf("Enter value to insert at beginning: ");
-                scanf("%d", &value);
-                insertion(value, 0);
-                break;
-            case 2:
-                printf("Enter value to insert at end: ");
-                scanf("%d", &value);
-                insertion(value, 1);
-                break;
-            case 3:
-                printf("Enter value to delete: ");
-                scanf("%d", &value);
-                deletion(value);
-                break;
-            case 4:
-                show();
-                break;
-            case 5:
-                exit(0);
-            default:
-                printf("Invalid Request!! Try Again Please\\n");
-        }
-    } while (choice != 5);
-
-    return 0;
+void printList()
+{
+  struct node *p = head;
+  printf("\n[ ");
+  while (p != NULL)
+  {
+    printf("%d ", p->data);
+    p = p->next;
+  }
+  printf("]\n");
 }
 
-void insertion(int x, int fromEnd) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = x;
-    newNode->next = NULL;
-
-    if (head == NULL) {
-        head = newNode;
-    } else if (fromEnd) {
-        struct Node* temp = head;
-        while (temp->next != NULL) {
-            temp = temp->next;
-        }
-        temp->next = newNode;
-    } else {
-        newNode->next = head;
-        head = newNode;
-    }
+void insertAtBegin(int data)
+{
+  struct node *lk = (struct node *)malloc(sizeof(struct node));
+  if (lk == NULL)
+  {
+    printf("Memory allocation failed.\n");
+    return;
+  }
+  lk->data = data;
+  lk->next = head;
+  head = lk;
 }
 
-void deletion(int x) {
-    if (head == NULL) {
-        printf("List is empty! Cannot delete.\\n");
-        return;
-    }
+void insertAtMiddle(int insert, int data)
+{
+  struct node *lk = (struct node *)malloc(sizeof(struct node));
+  struct node *p = head;
+  int count = 1;
+  if (lk == NULL)
+  {
+    printf("Memory allocation failed.\n");
+    return;
+  }
 
-    struct Node* temp = head;
-    struct Node* prev = NULL;
+  lk->data = data;
 
-    if (head->data == x) {
-        head = head->next;
-        free(temp);
-        printf("Node with value %d deleted.\\n", x);
-        return;
-    }
+  if (head == NULL)
+  {
+    head = lk;
+    lk->next = NULL;
+    return;
+  }
 
-    while (temp != NULL && temp->data != x) {
-        prev = temp;
-        temp = temp->next;
-    }
+  while (p != NULL && count < insert - 1)
+  {
+    p = p->next;
+    count++;
+  }
 
-    if (temp == NULL) {
-        printf("Node with value %d not found.\\n", x);
-    } else {
-        prev->next = temp->next;
-        free(temp);
-        printf("Node with value %d deleted.\\n", x);
-    }
+  if (p != NULL)
+  {
+    lk->next = p->next;
+    p->next = lk;
+  }
+  else
+  {
+    printf("Position not found to insert!");
+  }
 }
 
-void show() {
-    if (head == NULL) {
-        printf("List is empty!\\n");
-        return;
-    }
+void insertAtEnd(int data)
+{
+  struct node *lk = (struct node *)malloc(sizeof(struct node));
+  struct node *last = head;
+  if (lk == NULL)
+  {
+    printf("Memory allocation failed.\n");
+    return;
+  }
+  lk->data = data;
+  lk->next = NULL;
 
-    struct Node* temp = head;
-    printf("List elements: ");
-    while (temp != NULL) {
-        printf("%d ", temp->data);
-        temp = temp->next;
+  if (head == NULL)
+  {
+    head = lk;
+    return;
+  }
+
+  while (last->next != NULL)
+  {
+    last = last->next;
+  }
+  last->next = lk;
+}
+
+void deleteAtBegin()
+{
+  printf("Working!");
+}
+
+void deleteAtMiddle(int data)
+{
+  printf("Working!");
+}
+
+void deleteAtEnd()
+{
+  printf("Working!");
+}
+
+int searchData(int Data)
+{
+  struct node *p = head;
+  int count = 0;
+  while (p != NULL)
+  {
+    count++;
+    if (p->data == Data)
+    {
+      
+      return count;
     }
-    printf("\\n");
+    p = p->next;
+  }
+  return 0;
+}
+
+int main()
+{
+  int ch;
+  int Data, insert;
+  int k = 0;
+  do
+  {
+    printf("\nLinked List Operations: ");
+    printf("\n1. Insertion at Beginning\n2. Insertion at Middle\n3. Insertion at End");
+    printf("\n4. Deletion at Beginning\n5. Deletion at Middle\n6. Deletion at End");
+    printf("\n7. Show the List\n8. Search the Element\n9. Exit\n");
+    printf("Enter your choice: ");
+    scanf("%d", &ch);
+
+    switch (ch)
+    {
+    case 1:
+      printf("\nEnter the value to insert: ");
+      scanf("%d", &Data);
+      insertAtBegin(Data);
+      break;
+    case 2:
+      printf("Enter where you want to enter the value: ");
+      scanf("%d", &insert);
+      printf("\nEnter the value to insert: ");
+      scanf("%d", &Data);
+      insertAtMiddle(insert, Data);
+      break;
+    case 3:
+      printf("\nEnter the value to insert: ");
+      scanf("%d", &Data);
+      insertAtEnd(Data);
+      break;
+    case 4:
+      deleteAtBegin();
+      break;
+    case 5:
+      printf("\nEnter the value to delete: ");
+      scanf("%d", &Data);
+      deleteAtMiddle(Data);
+      break;
+    case 6:
+      deleteAtEnd();
+      break;
+    case 7:
+      printList();
+      break;
+    case 8:
+      printf("\nEnter the value to search: ");
+      scanf("%d", &Data);
+      k = searchData(Data);
+      if (k > 0)
+      {
+        printf("\nElement found at index %d\n", k);
+      }
+      else
+      {
+        printf("\nElement Not found!\n");
+      }
+      break;
+    case 9:
+      printf("\nExiting......\n");
+      break;
+    default:
+      printf("Invalid Request made! Try again.\n");
+    }
+  } while (ch != 9);
+
+  return 0;
 }
 `,
   };
