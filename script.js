@@ -486,381 +486,313 @@ void peep() {
     simpleQueue: `#include <stdio.h>
 #include <stdlib.h>
 
-void insert();
-void pop();
-void access();
-
-int R = -1; // Rear
-int F = -1; // Front
-int array[100], n;
-
-int main() {
-    int choice;
-
-    printf("\\nEnter the number of elements you want to insert: ");
-    scanf("%d", &n);
-
-    do {
-        printf("\\nOperations to be performed: ");
-        printf("\\n1. Insert\\n2. Pop\\n3. Show\\n4. Exit\\n");
-        printf("\\nEnter your Choice: ");
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                insert();
-                break;
-            case 2:
-                pop();
-                break;
-            case 3:
-                access();
-                break;
-            case 4:
-                exit(0);
-                break;
-            default:
-                printf("Invalid Request!! Try Again Please");
-        }
-    } while (choice != 4);
-    return 0;
-}
-
-void insert() {
-    int item;
-    printf("\\nEnter an item to insert: ");
-    scanf("%d", &item);
-    if (R == n - 1) {
-        printf("\\nQueue is Full\\n");
-    } else {
-        if (F == -1) F = 0; // Set F to 0 if it's the first element being inserted
-        array[++R] = item;
-        printf("\\nItem inserted: %d\\n", item);
-    }
-}
-
-void pop() {
-    if (F == -1 || F > R) {
-        printf("\\nQueue is Empty.\\n");
-    } else {
-        printf("\\nItem removed: %d\\n", array[F++]);
-        if (F > R) F = R = -1; // Reset queue if it becomes empty
-    }
-}
-
-void access() {
-    if (F == -1) {
-        printf("\\nQueue is Empty.\\n");
-    } else {
-        printf("\\nQueue elements are: ");
-        for (int i = F; i <= R; ++i) {
-            printf("%d ", array[i]);
-        }
-        printf("\\n");
-    }
-}
-`,
-    cricularQueue: `#include <stdio.h>
-#include <stdlib.h>
-#define MAX  5
-
-int rear = -1,front = -1;
-int cQueue[MAX];
-
-void insert(){
-    int item;
-    if((front == 0 && rear == MAX -1) || front == rear + 1){
-        printf("\\nQueue is full!\\n");
-        return;
-    } else {
-        if(front == -1){
-            front = rear = 0;
-        } else {
-            if(rear == MAX - 1) {
-                rear = 0;
-            } else {
-                rear++;
-            }
-        }
-    }
-    printf("\\nEnter element to be inserted: ");
-    scanf("%d",&item);
-    cQueue[rear] = item;
-    printf("\\n%d inserted successfully!\\n", item);
-}
-
-void deletion(){
-    if(front == -1){
-        printf("\\nQueue is Empty!\\n");
-        return;
-    } else {
-        printf("\\n%d deleted successfully!\\n",cQueue[front]);
-        if(front == rear){
-            front = rear = -1;
-        } else {
-            if(front == MAX - 1){
-                front = 0;
-            } else {
-                front++;
-            }
-        }
-    }
-}
-
-void display(){
-    int rear_pos = rear, front_pos = front;
-    if(front == -1){
-        printf("\\nQueue is Empty!\\n");
-        return;
-    } else {
-        printf("\\nQueue Elements: ");
-        if(front_pos <= rear_pos){
-            while(front_pos <= rear_pos){
-                printf(" %d ",cQueue[front_pos]);
-                front_pos++;
-            }
-        } else {
-            while(front_pos < MAX){
-                printf(" %d ",cQueue[front_pos]);
-                front_pos++;
-            }
-            front_pos = 0;
-            while(front_pos <= rear_pos){
-                printf(" %d ",cQueue[front_pos]);
-                front_pos++;
-            }
-        }
-    }
-    printf("\\n");
-}
-
-int main() {
-    int choice;
-
-    do {
-        printf("\\nCircular Queue Operation: ");
-        printf("\\n1. Insert\\n2. Delete\\n3. Display\\n4. Exit\\n");
-        printf("\\nEnter your choice: ");
-        scanf("%d", &choice);
-
-        switch(choice) {
-            case 1: insert();
-                    break;
-            case 2: deletion();
-                    break;
-            case 3: display();
-                    break;
-            case 4: exit(0);
-                    break;
-            default: 
-                    printf("\\nInvalid Request!");
-        } 
-    } while(choice != 4);
-
-    return 0;
-}
-`, 
-        simpleLinkedList: `
-#include <stdio.h>
-#include <stdlib.h>
-
-struct node
-{
-  int data;
-  struct node *next;
+struct node {
+    int data;
+    struct node *next;
 };
 
 struct node *head = NULL;
-struct node *current = NULL;
 
-void printList()
-{
-  struct node *p = head;
-  printf("\\n[ ");
-  while (p != NULL)
-  {
-    printf("%d ", p->data);
-    p = p->next;
-  }
-  printf("]\\n");
-}
-
-void insertAtBegin(int data)
-{
-  struct node *lk = (struct node *)malloc(sizeof(struct node));
-  if (lk == NULL)
-  {
-    printf("Memory allocation failed.\\n");
-    return;
-  }
-  lk->data = data;
-  lk->next = head;
-  head = lk;
-}
-
-void insertAtMiddle(int insert, int data)
-{
-  struct node *lk = (struct node *)malloc(sizeof(struct node));
-  struct node *p = head;
-  int count = 1;
-  if (lk == NULL)
-  {
-    printf("Memory allocation failed.\\n");
-    return;
-  }
-
-  lk->data = data;
-
-  if (head == NULL)
-  {
-    head = lk;
-    lk->next = NULL;
-    return;
-  }
-
-  while (p != NULL && count < insert - 1)
-  {
-    p = p->next;
-    count++;
-  }
-
-  if (p != NULL)
-  {
-    lk->next = p->next;
-    p->next = lk;
-  }
-  else
-  {
-    printf("Position not found to insert!");
-  }
-}
-
-void insertAtEnd(int data)
-{
-  struct node *lk = (struct node *)malloc(sizeof(struct node));
-  struct node *last = head;
-  if (lk == NULL)
-  {
-    printf("Memory allocation failed.\\n");
-    return;
-  }
-  lk->data = data;
-  lk->next = NULL;
-
-  if (head == NULL)
-  {
-    head = lk;
-    return;
-  }
-
-  while (last->next != NULL)
-  {
-    last = last->next;
-  }
-  last->next = lk;
-}
-
-void deleteAtBegin()
-{
-  printf("Working!");
-}
-
-void deleteAtMiddle(int data)
-{
-  printf("Working!");
-}
-
-void deleteAtEnd()
-{
-  printf("Working!");
-}
-
-int searchData(int Data)
-{
-  struct node *p = head;
-  int count = 0;
-  while (p != NULL)
-  {
-    count++;
-    if (p->data == Data)
-    {
-      
-      return count;
+void printList() {
+    struct node *p = head;
+    printf("\\n[ ");
+    while (p != NULL) {
+        printf("%d ", p->data);
+        p = p->next;
     }
-    p = p->next;
-  }
-  return 0;
+    printf("]\\n");
 }
 
-int main()
-{
-  int ch;
-  int Data, insert;
-  int k = 0;
-  do
-  {
-    printf("\\nLinked List Operations: ");
-    printf("\\n1. Insertion at Beginning\\n2. Insertion at Middle\\n3. Insertion at End");
-    printf("\\n4. Deletion at Beginning\\n5. Deletion at Middle\\n6. Deletion at End");
-    printf("\\n7. Show the List\\n8. Search the Element\\n9. Exit\\n");
-    printf("Enter your choice: ");
-    scanf("%d", &ch);
-
-    switch (ch)
-    {
-    case 1:
-      printf("\\nEnter the value to insert: ");
-      scanf("%d", &Data);
-      insertAtBegin(Data);
-      break;
-    case 2:
-      printf("Enter where you want to enter the value: ");
-      scanf("%d", &insert);
-      printf("\\nEnter the value to insert: ");
-      scanf("%d", &Data);
-      insertAtMiddle(insert, Data);
-      break;
-    case 3:
-      printf("\\nEnter the value to insert: ");
-      scanf("%d", &Data);
-      insertAtEnd(Data);
-      break;
-    case 4:
-      deleteAtBegin();
-      break;
-    case 5:
-      printf("\\nEnter the value to delete: ");
-      scanf("%d", &Data);
-      deleteAtMiddle(Data);
-      break;
-    case 6:
-      deleteAtEnd();
-      break;
-    case 7:
-      printList();
-      break;
-    case 8:
-      printf("\\nEnter the value to search: ");
-      scanf("%d", &Data);
-      k = searchData(Data);
-      if (k > 0)
-      {
-        printf("\\nElement found at index %d\\n", k);
-      }
-      else
-      {
-        printf("\\nElement Not found!\\n");
-      }
-      break;
-    case 9:
-      printf("\\nExiting......\\n");
-      break;
-    default:
-      printf("Invalid Request made! Try again.\\n");
+void insertAtBegin(int data) {
+    struct node *newNode = (struct node*) malloc(sizeof(struct node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed.\\n");
+        return;
     }
-  } while (ch != 9);
+    newNode->data = data;
+    newNode->next = head;
+    head = newNode;
+}
 
-  return 0;
+void insertAtMiddle(int data) {
+    struct node *newNode = (struct node*) malloc(sizeof(struct node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed.\\n");
+        return;
+    }
+    newNode->data = data;
+
+    // If list is empty or we insert at the beginning
+    if (head == NULL || head->data >= data) {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+
+    // Locate the node after which the new node is to be inserted
+    struct node *current = head;
+    while (current->next != NULL && current->next->data < data) {
+        current = current->next;
+    }
+    
+    newNode->next = current->next;
+    current->next = newNode;
+}
+
+void insertAtEnd(int data) {
+    struct node *newNode = (struct node*) malloc(sizeof(struct node));
+    struct node *last = head;
+    if (newNode == NULL) {
+        printf("Memory allocation failed.\\n");
+        return;
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+
+    while (last->next != NULL) {
+        last = last->next;
+    }
+    last->next = newNode;
+}
+
+void deleteAtBegin() {
+    if (head == NULL) {
+        printf("List is empty, nothing to delete.\\n");
+        return;
+    }
+    struct node *temp = head;
+    head = head->next;
+    free(temp);
+    printf("Deleted the first element.\\n");
+}
+
+void deleteAtMiddle(int data) {
+    if (head == NULL) {
+        printf("List is empty, nothing to delete.\\n");
+        return;
+    }
+
+    struct node *current = head;
+    struct node *prev = NULL;
+
+    while (current != NULL && current->data != data) {
+        prev = current;
+        current = current->next;
+    }
+
+    // If the data was not found
+    if (current == NULL) {
+        printf("Element %d not found in the list.\\n", data);
+        return;
+    }
+
+    // Unlink the node from linked list
+    if (prev == NULL) {
+        head = current->next; // The node to delete is the head
+    } else {
+        prev->next = current->next;
+    }
+    
+    free(current);
+    printf("Deleted the element %d.\\n", data);
+}
+
+void deleteAtEnd() {
+    if (head == NULL) {
+        printf("List is empty, nothing to delete.\\n");
+        return;
+    }
+    
+    struct node *current = head;
+    struct node *prev = NULL;
+
+    // If the list contains only one node
+    if (current->next == NULL) {
+        free(current);
+        head = NULL;
+        printf("Deleted the last element.\\n");
+        return;
+    }
+
+    // Traverse to the last node
+    while (current->next != NULL) {
+        prev = current;
+        current = current->next;
+    }
+
+    // Unlink the last node
+    prev->next = NULL;
+    free(current);
+    printf("Deleted the last element.\\n");
+}
+
+int searchData(int data) {
+    struct node *p = head;
+    while (p != NULL) {
+        if (p->data == data) {
+            return 1;
+        }
+        p = p->next;
+    }
+    return 0;
+}
+
+int main() {
+    int ch;
+    int data;
+    int k = 0;
+    do {
+        printf("\\nLinked List Operations: ");
+        printf("\\n1. Insertion at Beginning\\n2. Insertion at Middle\\n3. Insertion at End");
+        printf("\\n4. Deletion at Beginning\\n5. Deletion at Middle\\n6. Deletion at End");
+        printf("\\n7. Show the List\\n8. Search the Element\\n9. Exit\\n");
+        printf("Enter your choice: ");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                printf("\\nEnter the value to insert: ");
+                scanf("%d", &data);
+                insertAtBegin(data);
+                break;
+            case 2:
+                printf("\\nEnter the value to insert: ");
+                scanf("%d", &data);
+                insertAtMiddle(data);
+                break;
+            case 3:
+                printf("\\nEnter the value to insert: ");
+                scanf("%d", &data);
+                insertAtEnd(data);
+                break;
+            case 4:
+                deleteAtBegin();
+                break;
+            case 5:
+                printf("\\nEnter the value to delete: ");
+                scanf("%d", &data);
+                deleteAtMiddle(data);
+                break;
+            case 6:
+                deleteAtEnd();
+                break;
+            case 7:
+                printList();
+                break;
+            case 8:
+                printf("\\nEnter the value to search: ");
+                scanf("%d", &data);
+                k = searchData(data);
+                if (k == 1) {
+                    printf("\\nElement found!\\n");
+                } else {
+                    printf("\\nElement Not found!\\n");
+                }
+                break;
+            case 9:
+                printf("\\nExiting......\\n");
+                break;
+            default:
+                printf("Invalid Request made! Try again.\\n");
+        }
+    } while (ch != 9);
+
+    return 0;
+}
+`,
+    infixToPostfix: `#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+void push(char c) {
+	if(top == MAX - 1) {
+		printf("Stack Overflow\\n");
+		exit(1);
+	}
+	stack[++top] = c;
+}
+
+char pop() {
+	if (top == -1) {
+		printf("Stack Underflow\\n");
+		exit(1);
+	}
+	return stack[top--];
+}
+
+char peek() {
+	if(top == -1) {
+		return -1;
+	}
+	return stack[top];
+}
+
+int precedence(char op) {
+	switch (op) {
+		case '+':
+		case '-':
+			return 1;
+		case '*':
+		case '/':
+			return 2;
+		case '^':
+			return 3;
+		default:
+			return 0;
+	}
+}
+
+int is_operator(char c) {
+	return(c == '+' || c == '-' || c == '/' || c == '*' || c == '^');
+}
+
+void infix_to_postfix(char *exp) {
+	int i = 0;
+	while (exp[i] != '\\0') {
+		char c = exp[i];
+		
+		if(isalnum(c)) {
+			printf("%c", c);
+		} else if (c == '(') {
+			push(c);
+		} else if (c == ')') {
+			while (peek() != '(') {
+			printf("%c",pop());
+			}
+			pop();
+		} else if (is_operator(c)) {
+			while (top != -1 && precedence(peek()) >= precedence(c)) {
+				printf("%c", pop());
+			}
+			push(c);
+		} 
+		i++;
+	}
+	
+	while(top != -1) {
+		printf("%c", pop());
+	}
+}
+
+int main() {
+	char exp[MAX];
+	
+	printf("\\nEnter infix expression: ");
+	scanf("%s", exp);
+	
+	printf("Postfix expression: ");
+	infix_to_postfix(exp);
+	
+	return 0;
 }
 `,
   };
