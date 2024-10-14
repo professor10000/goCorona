@@ -483,7 +483,219 @@ void peep() {
     }
 }
 `,
-    simpleQueue: `#include <stdio.h>
+simpleQueue: `
+#include<stdio.h>
+int queue[5];
+int i,n;
+int front=-1,rear=-1;
+void insert();
+void deleted();
+void display();
+int main()
+{
+    int i, ch;
+    printf("Enter the size:");
+    scanf("%d",&n);
+    do
+    {
+	printf("\\nEnter your choice:\\n 1.INSERT\\n2.DELETE\\n3.DISPLAY\\n0.EXIT\\n");
+	scanf("%d",&ch);
+	switch(ch)
+	{
+	    case 1:
+		insert();
+		break;
+	    case 2:
+		deleted();
+		break;
+	    case 3:
+		display();
+		break;
+	    default:
+		printf("enter valid option...");
+		break;
+	}
+    }while(ch!=0);
+    return 0;
+
+}
+void insert()
+{
+    int item;
+    if(rear>=n-1)
+    {
+	printf("queue is overflow");
+    }
+    else
+    {
+	printf("Enter element to be inserted");
+	scanf("%d",&item);
+	rear=rear+1;
+	queue[rear]=item;
+	if(front==-1)
+	{
+	    front=0;
+	}
+	printf("Insertion done... & item inserted=%d",item);
+    }
+}
+void deleted()
+{
+    int item;
+    if(front==-1)
+    {
+	printf("queue is underflow");
+    }
+    else
+    {
+	printf("Item deleted...%d",queue[front]);
+	if(front==rear)
+	{
+	    front=-1;
+	    rear=-1;
+	}
+	else
+	{
+	    front=front+1;
+	}
+    }
+}
+void display()
+{
+    int i;
+     if(front==-1)
+    {
+	printf("queue is empty");
+    }
+    else
+    {
+	for(i=front;i<=rear;i++)
+	{
+	    printf("%d\\n",queue[i]);
+	}
+    }
+}
+`,
+
+circularQueue: `#include<stdio.h>
+# define MAX 5
+int cqueue_arr[MAX];
+int front = -1;
+int rear = -1;
+void insert()
+{
+    int item;
+	if((front == 0 && rear == MAX-1) || (front == rear+1))
+	{
+		printf("\\n Queue Overflow ");
+	    return;
+	}
+    else{
+    
+	if(front == -1)
+	{
+	front = 0;
+	rear = 0;
+	}
+	else
+	{
+		if(rear == MAX-1)
+		rear = 0;
+		else
+		rear = rear+1;
+	}
+	printf("\\n Enter element to be inserted \\n");
+	scanf("%d", &item);
+	cqueue_arr[rear] = item ;
+	printf("\\n Element inserted successfully \\n");
+    }
+}
+void deletion()
+{
+	if(front == -1)
+	{
+		printf("Queue Underflown");
+		return ;
+	}
+	printf("\\n Element deleted from queue is : %dn",cqueue_arr[front]);
+	if(front == rear)
+	{
+		front = -1;
+		rear=-1;
+	}
+	else
+	{
+		if(front == MAX-1)
+		front = 0;
+		else
+		front = front+1;
+	}
+}
+void display()
+{
+	int front_pos = front,rear_pos = rear;
+	if(front == -1)
+	{
+		printf("\\n Queue is empty");
+		return;
+	}
+	printf("\\n Queue elements :");
+	if( front_pos <= rear_pos )
+	while(front_pos <= rear_pos)
+	{
+		printf("%d ",cqueue_arr[front_pos]);
+		front_pos++;
+	}
+	else
+	{
+	while(front_pos <= MAX-1)
+	{
+		printf("%d ",cqueue_arr[front_pos]);
+		front_pos++;
+	}
+	front_pos = 0;
+	while(front_pos <= rear_pos)
+	{
+		printf("%d ",cqueue_arr[front_pos]);
+		front_pos++;
+	}
+	}
+	printf("\\n");
+}
+int main()
+{
+	int choice,item;
+	
+	do
+	{
+	printf("\\n 1.Insert");
+	printf("\\n 2.Delete");
+	printf("\\n 3.Display");
+	printf("\\n 4.Quit");
+	printf("\\n Enter your choice : ");
+	scanf("%d",&choice);
+	switch(choice)
+	{
+	case 1 :
+	insert();
+	break;
+	case 2 :
+	deletion();
+	break;
+	case 3:
+	display();
+	break;
+	case 4:
+	break;
+	default:
+	printf("\\n Wrong choicen");
+	}
+	}while(choice!=4);
+return 0;
+}
+`,
+	  
+simpleLinkedList: `#include <stdio.h>
 #include <stdlib.h>
 
 struct node {
