@@ -578,7 +578,7 @@ void display()
 `,
 
 circularQueue: `#include<stdio.h>
-# define MAX 5
+#define MAX 5
 int cqueue_arr[MAX];
 int front = -1;
 int rear = -1;
